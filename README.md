@@ -1,4 +1,4 @@
-# street_vendors
+# Street_vendors
 
 Developing a mobile application in Flutter that enable users to easily locate and access information about nearby street vendors , fostering efficient vendor discovery and enhancing urban shopping experiences.
 
