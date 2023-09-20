@@ -1,6 +1,6 @@
 # street_vendors
 
-A new Flutter project.
+A new Flutter project.<br>
 Developing a mobile app that enable users to easily locate and access information about nearby street vendors , fostering efficient vendor discovery and enhancing urban shopping experiences.
 
 We have implemented functionalities like:
