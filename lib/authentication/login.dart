@@ -7,7 +7,10 @@ import 'package:street_vendors/mainScreens/home_screen.dart';
 import 'package:street_vendors/widgets/error_dialog.dart';
 import 'package:street_vendors/widgets/loading_dialog.dart';
 
+import '../ForgetPassword/forget_password_screen.dart';
 import '../widgets/custom_text_field.dart';
+
+//This is Login Screen not AuthScreen COMPLETED
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -20,6 +23,7 @@ class _LoginScreenState extends State<LoginScreen>
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   TextEditingController emailcontroller = TextEditingController();
   TextEditingController passwordcontroller = TextEditingController();
+
 
   formValidation()
   {
@@ -142,9 +146,33 @@ class _LoginScreenState extends State<LoginScreen>
                   hintText: "Password",
                   isObsecre: true,
                 ),
+
+                const SizedBox(height: 2,),
+
+                Align(
+                  alignment: Alignment.bottomRight,
+                  child: TextButton(
+                    onPressed: ()
+                    {
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => ForgetPassword()));
+                    },
+                    child: const Text(
+                      'Forget password?  ',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 17,
+                        letterSpacing: 1,
+                        fontStyle: FontStyle.italic,
+                      ),
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
+
+          const SizedBox(height: 6,),
+
           ElevatedButton(
             style: ElevatedButton.styleFrom(
               primary: Colors.cyan,
@@ -159,7 +187,9 @@ class _LoginScreenState extends State<LoginScreen>
               style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,),
             ),
           ),
-          const SizedBox(height: 30,),
+
+          const SizedBox(height: 10,),
+
         ],
       ),
     );

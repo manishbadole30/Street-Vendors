@@ -9,3 +9,9 @@ We have implemented functionalities like:
 4. Showing There Opening and Closing Time
 5. Showing There Average Pricing Online
 
+6. Bottom Navigation Bar With Its Functionalities
+7. User Image Upload Screen in Grid and List View
+8. User Profile Screen With Edit
+9. Forget Password
+10. UI Updated
+

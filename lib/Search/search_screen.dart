@@ -3,8 +3,12 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:street_vendors/models/locations.dart';
+import 'package:street_vendors/widgets/bottom_nav_bar.dart';
 
+import '../mainScreens/home_screen.dart';
 import '../widgets/locations_design.dart';
+
+//Search Screen in Navbar COMPLETED
 
 class SearchScreen extends StatefulWidget
 {
@@ -22,7 +26,7 @@ class _SearchScreenState extends State<SearchScreen>
 {
   Future<QuerySnapshot>? locationsDocumentsList;
 
-  String locationText = "";
+  String locationText = '';
 
   initSearchingLocation(String textEntered)
   {
@@ -30,14 +34,25 @@ class _SearchScreenState extends State<SearchScreen>
         .collection("locations")
         .where("location", isGreaterThanOrEqualTo: textEntered)
         .get();
-        
+
+    setState(() {
+      locationsDocumentsList;
+    });
   }
   
   @override
   Widget build(BuildContext context)
   {
     return Scaffold(
+      bottomNavigationBar: BottomNavigationBarForApp(indexNum: 1),
       appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back,color: Colors.black,),
+          onPressed: ()
+          {
+            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const HomeScreen()));
+          },
+        ),
         flexibleSpace: Container(
           decoration: const BoxDecoration(
               gradient: LinearGradient(
@@ -63,7 +78,7 @@ class _SearchScreenState extends State<SearchScreen>
           },
           decoration: InputDecoration(
             hintText: "Search Location here...",
-            hintStyle: const TextStyle(color: Colors.white54),
+            hintStyle: const TextStyle(color: Colors.white54, fontSize: 20),
             border: InputBorder.none,
             suffixIcon: IconButton(
               icon: const Icon(Icons.search),

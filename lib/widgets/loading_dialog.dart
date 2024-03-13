@@ -5,7 +5,7 @@ class LoadingDialog extends StatelessWidget
 {
   final String? message;
 
-  LoadingDialog({this.message});
+  LoadingDialog({super.key, this.message});
 
 
   @override
@@ -16,7 +16,7 @@ class LoadingDialog extends StatelessWidget
         mainAxisSize: MainAxisSize.min,
         children: [
           circularProgress(),
-          SizedBox(height: 10,),
+          const SizedBox(height: 10,),
           Text("${message!}, Please wait..."),
         ],
       ),

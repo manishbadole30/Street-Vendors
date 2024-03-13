@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Shops
@@ -16,16 +14,16 @@ class Shops
   String? status;
 
   Shops({
-    this.shopID,
-    this.locationUID,
-    this.shopTitle,
-    this.shopInfo,
-    this.shopTiming,
-    this.shopAvgPrice,
-    this.shopContactInfo,
-    this.publishedDate,
-    this.shopUrl,
-    this.status,
+    required this.shopID,
+    required this.locationUID,
+    required this.shopTitle,
+    required this.shopInfo,
+    required this.shopTiming,
+    required this.shopAvgPrice,
+    required this.shopContactInfo,
+    required this.publishedDate,
+    required this.shopUrl,
+    required this.status,
   });
 
   Shops.fromJson(Map<String, dynamic> json)

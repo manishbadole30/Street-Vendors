@@ -7,8 +7,6 @@ import 'package:street_vendors/models/locations.dart';
 import 'package:street_vendors/widgets/app_bar.dart';
 import 'package:street_vendors/widgets/shops_design.dart';
 
-import '../authentication/auth_screen.dart';
-import '../global/global.dart';
 import '../models/shops.dart';
 import '../widgets/my_drawer.dart';
 import '../widgets/progress_bar.dart';
@@ -18,7 +16,7 @@ import '../widgets/text_widget_header.dart';
 class ShopsScreen extends StatefulWidget
 {
   final Locations? model;
-  ShopsScreen({this.model});
+  ShopsScreen({super.key, this.model});
 
   @override
   _ShopsScreenState createState() => _ShopsScreenState();
@@ -30,11 +28,11 @@ class _ShopsScreenState extends State<ShopsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: MyDrawer(),
+      drawer: const MyDrawer(),
       appBar: MyAppBar(),
       body: CustomScrollView(
         slivers: [
-          SliverPersistentHeader(pinned: true,delegate: TextWidgetHeader(title: widget.model!.location.toString() + " Shops")),
+          SliverPersistentHeader(pinned: true,delegate: TextWidgetHeader(title: "${widget.model!.location} Shops")),
           StreamBuilder<QuerySnapshot>(
             stream: FirebaseFirestore.instance
                 .collection("locations")
@@ -50,7 +48,7 @@ class _ShopsScreenState extends State<ShopsScreen> {
               )
                   : SliverStaggeredGrid.countBuilder(
                 crossAxisCount: 1,
-                staggeredTileBuilder: (c)=> StaggeredTile.fit(1),
+                staggeredTileBuilder: (c)=> const StaggeredTile.fit(1),
                 itemBuilder: (context, index)
                 {
                   Shops model = Shops.fromJson(

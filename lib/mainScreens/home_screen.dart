@@ -1,16 +1,14 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:street_vendors/authentication/auth_screen.dart';
-import 'package:street_vendors/global/global.dart';
 import 'package:street_vendors/models/locations.dart';
+import 'package:street_vendors/widgets/bottom_nav_bar.dart';
 import 'package:street_vendors/widgets/locations_design.dart';
 import 'package:street_vendors/widgets/my_drawer.dart';
 import 'package:street_vendors/widgets/progress_bar.dart';
 
-import '../notificationsScreens/notifications_appbar.dart';
+import '../Search/user_profile_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -52,9 +50,15 @@ class _HomeScreenState extends State<HomeScreen> {
     "slider/26.jpg",
     "slider/27.jpg",
   ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
+      bottomNavigationBar: BottomNavigationBarForApp(indexNum :0),
+
+      // backgroundColor: Colors.greenAccent.shade100,
+
       appBar: AppBar(
         flexibleSpace: Container(
           decoration: const BoxDecoration(
@@ -80,13 +84,12 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         centerTitle: true,
         automaticallyImplyLeading: true,
-        actions: [
+        actions: <Widget> [
           IconButton(
-            icon: const Icon(Icons.notifications, color: Colors.cyan),
-            onPressed: ()
-            {
-              Navigator.push(context, MaterialPageRoute(builder: (c)=> const NotificationsAppBar()));
+            onPressed: () {
+              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const ProfileScreen()));
             },
+            icon: const Icon(Icons.person,color: Colors.cyan,),
           ),
         ],
         ),
@@ -97,6 +100,15 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Padding(
               padding: const EdgeInsets.all(10.0),
               child: Container(
+                margin: const EdgeInsets.only(left: 0.0, top: 5, right: 0.0, bottom: 5),
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [Colors.pinkAccent, Colors.purpleAccent],
+                    begin: Alignment.centerLeft,
+                    end: Alignment.centerRight,
+                    stops: [0.2, 0.9],
+                  )
+                ),
                 height: MediaQuery.of(context).size.height * .3,
                 width: MediaQuery.of(context).size.width ,
                 child: CarouselSlider(
@@ -121,10 +133,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         width: MediaQuery.of(context).size.width,
                         margin: const EdgeInsets.symmetric(horizontal: 2.0),
                         decoration: const BoxDecoration(
-                          color: Colors.black,
+                          color: Colors.black54,
                         ),
                         child: Padding(
-                          padding: const EdgeInsets.all(4.0) ,
+                          padding: const EdgeInsets.all(9.0) ,
                           child: Image.asset(
                             index ,
                             fit: BoxFit.fill,

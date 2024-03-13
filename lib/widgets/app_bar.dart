@@ -4,7 +4,7 @@ class MyAppBar extends StatefulWidget implements PreferredSizeWidget
 {
 
   final PreferredSizeWidget? bottom;
-  MyAppBar({this.bottom});
+  MyAppBar({super.key, this.bottom});
 
   @override
   _MyAppBarState createState() => _MyAppBarState();

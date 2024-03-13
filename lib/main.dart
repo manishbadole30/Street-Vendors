@@ -12,6 +12,7 @@ Future<void> main() async
   await Firebase.initializeApp();
 
   runApp(const MyApp());
+
 }
 
 class MyApp extends StatelessWidget {
@@ -28,6 +29,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       home: const MySplashScreen(),
+      // home: FirebaseAuth.instance.currentUser == null ? LoginScreen() : HomeScreen(),
     );
   }
 }

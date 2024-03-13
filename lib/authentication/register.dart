@@ -3,8 +3,10 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:street_vendors/authentication/auth_screen.dart';
 import 'package:street_vendors/mainScreens/home_screen.dart';
 import 'package:street_vendors/widgets/custom_text_field.dart';
 import 'package:street_vendors/widgets/loading_dialog.dart';
@@ -12,6 +14,9 @@ import 'package:street_vendors/widgets/loading_dialog.dart';
 import '../global/global.dart';
 import '../widgets/error_dialog.dart';
 import 'package:firebase_storage/firebase_storage.dart' as fStorage;
+
+
+// This is Register Screen not Auth Screen COMPLETED
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -37,14 +42,101 @@ class _RegisterScreenState extends State<RegisterScreen>
 
   String sellerImageUrl = "";
 
-  Future<void> _getImage() async
-  {
-      imageXFile = await _picker.pickImage(source: ImageSource.gallery);
+  // Future<void> _getImage() async
+  // {
+  //     imageXFile = await _picker.pickImage(source: ImageSource.gallery);
+  //
+  //     setState(() {
+  //       imageXFile;
+  //     });
+  // }
 
-      setState(() {
-        imageXFile;
-      });
+  void _showImageDialog() {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text(
+              "Please choose an option",
+            ),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                InkWell(
+                  onTap: () {
+                    _getFromCamera();
+                  },
+                  child: const Row(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.all(4.0),
+                        child: Icon(
+                          Icons.camera,
+                          color: Colors.red,
+                        ),
+                      ),
+                      Text(
+                        "Camera",
+                        style: TextStyle(color: Colors.red,),
+                      ),
+                    ],
+                  ),
+                ),
+
+                InkWell(
+                  onTap: () {
+                    _getFromGallery();
+                  },
+                  child: const Row(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.all(4.0),
+                        child: Icon(
+                          Icons.image,
+                          color: Colors.red,
+                        ),
+                      ),
+                      Text(
+                        "Gallery",
+                        style: TextStyle(color: Colors.red,),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          );
+        }
+    );
   }
+
+  void _getFromCamera() async
+  {
+    XFile? pickedFile =  await ImagePicker().pickImage(source: ImageSource.camera);
+    _cropImage(pickedFile!.path);
+    Navigator.pop(context);
+  }
+
+  void _getFromGallery() async
+  {
+    XFile? pickedFile =  await ImagePicker().pickImage(source: ImageSource.gallery);
+    _cropImage(pickedFile!.path);
+    Navigator.pop(context);
+  }
+
+  void _cropImage(filePath) async
+  {
+    CroppedFile? croppedImage = await ImageCropper().cropImage(
+      sourcePath: filePath, maxHeight: 1080, maxWidth: 1080,);
+
+    if(croppedImage != null)
+    {
+      setState(() {
+        imageXFile = XFile(croppedImage.path);
+      });
+    }
+  }
+
 
   Future<void> formValidation() async
   {
@@ -144,7 +236,7 @@ class _RegisterScreenState extends State<RegisterScreen>
         saveDataToFirestore(currentUser!).then((value) {
           Navigator.pop(context);
           //send user to homepage
-          Route newRoute = MaterialPageRoute(builder: (c) => HomeScreen());
+          Route newRoute = MaterialPageRoute(builder: (c) => const HomeScreen());
           Navigator.pushReplacement(context, newRoute);
         });
       }
@@ -159,7 +251,7 @@ class _RegisterScreenState extends State<RegisterScreen>
       "userPassword":passwordcontroller.text.trim(),
       "userAvatarUrl":sellerImageUrl,
       "userphone":phonecontroller.text.trim(),
-      "userstatus":"approved",
+      'createdAt': Timestamp.now(),
     });
 
     //save data locally
@@ -174,112 +266,124 @@ class _RegisterScreenState extends State<RegisterScreen>
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: Container(
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            const SizedBox(height: 10,),
-           InkWell(
-             onTap: ()
-             {
-               _getImage();
-             },
-             child: CircleAvatar(
-               radius: MediaQuery.of(context).size.width * 0.20,
-               backgroundColor: Colors.white,
-               backgroundImage: imageXFile==null ? null : FileImage(File(imageXFile!.path)),
-               child: imageXFile == null ?
-               Icon(
-                 Icons.add_photo_alternate,
-                 size: MediaQuery.of(context).size.width * 0.20,
-                 color: Colors.grey,
-               ) : null ,
-             ),
+      child: Column(
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          const SizedBox(height: 10,),
+         InkWell(
+           onTap: ()
+           {
+             // _getImage();
+             _showImageDialog();
+           },
+           child: CircleAvatar(
+             radius: MediaQuery.of(context).size.width * 0.20,
+             backgroundColor: Colors.white,
+             backgroundImage: imageXFile==null ? null : FileImage(File(imageXFile!.path)),
+             child: imageXFile == null ?
+             Icon(
+               Icons.add_photo_alternate,
+               size: MediaQuery.of(context).size.width * 0.20,
+               color: Colors.grey,
+             ) : null ,
            ),
-            const SizedBox(height: 10,),
-            Form(
-              key: _formKey,
-              child: Column(
-                children: [
-                  CustomTextField(
-                    data: Icons.person,
-                    controller: namecontroller,
-                    hintText: "Name",
-                    isObsecre: false,
+         ),
+          const SizedBox(height: 10,),
+          Form(
+            key: _formKey,
+            child: Column(
+              children: [
+                CustomTextField(
+                  data: Icons.person,
+                  controller: namecontroller,
+                  hintText: "Name",
+                  isObsecre: false,
+                ),
+                CustomTextField(
+                  data: Icons.email,
+                  controller: emailcontroller,
+                  hintText: "Email",
+                  isObsecre: false,
+                ),
+                CustomTextField(
+                  data: Icons.lock,
+                  controller: passwordcontroller,
+                  hintText: "Password",
+                  isObsecre: true,
+                ),
+                CustomTextField(
+                  data: Icons.lock,
+                  controller: confirmPasswordcontroller,
+                  hintText: "Confirm Password",
+                  isObsecre: true,
+                ),
+                CustomTextField(
+                  data: Icons.phone,
+                  controller: phonecontroller,
+                  hintText: "Phone",
+                  isObsecre: false,
+                ),
+              ],
+            ),
+          ),
+
+          const SizedBox(height: 8,),
+
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              primary: Colors.purple,
+              padding: const EdgeInsets.symmetric(horizontal: 50,vertical: 10),
+            ),
+            onPressed: () {
+              formValidation();
+            },
+            child: const Text(
+              "Sign Up",
+              style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,letterSpacing: 2),
+            ),
+          ),
+
+          const SizedBox(height: 8,),
+
+
+          Row(
+            children: [
+              const Expanded(
+                child: Text(
+                  'Already have an account?',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
                   ),
-                  CustomTextField(
-                    data: Icons.email,
-                    controller: emailcontroller,
-                    hintText: "Email",
-                    isObsecre: false,
-                  ),
-                  CustomTextField(
-                    data: Icons.lock,
-                    controller: passwordcontroller,
-                    hintText: "Password",
-                    isObsecre: true,
-                  ),
-                  CustomTextField(
-                    data: Icons.lock,
-                    controller: confirmPasswordcontroller,
-                    hintText: "Confirm Password",
-                    isObsecre: true,
-                  ),
-                  CustomTextField(
-                    data: Icons.phone,
-                    controller: phonecontroller,
-                    hintText: "Phone",
-                    isObsecre: false,
-                  ),
-                  CustomTextField(
-                    data: Icons.my_location,
-                    controller: locationcontroller,
-                    hintText: "Street Address",
-                    isObsecre: false,
-                    enabled: false,
-                  ),
-                  Container(
-                    width: 400,
-                    height: 40,
-                    alignment: Alignment.center,
-                    child: ElevatedButton.icon(
-                      label: const Text(
-                        "Get my Current Location",
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      icon: const Icon(
-                        Icons.location_on,
-                        color: Colors.white,
-                      ),
-                      onPressed: ()=> print("clicked"),
-                      style: ElevatedButton.styleFrom(
-                        primary: Colors.amber,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30),
-                        )
-                      ),
+                  textAlign: TextAlign.right,
+                ),
+              ),
+              Align(
+                alignment: Alignment.bottomRight,
+                child: TextButton(
+                  onPressed: ()
+                  {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => const AuthScreen()));
+                  },
+                  child:  const Text(
+                    ' Login ',
+                    style: TextStyle(
+                      color: Colors.white,
+                      backgroundColor: Colors.red,
+                      fontSize: 18,
+                      fontStyle: FontStyle.italic,
+                      letterSpacing: 1,
                     ),
                   ),
-                ],
+                ),
               ),
-            ),
-            const SizedBox(height: 30,),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                primary: Colors.purple,
-                padding: const EdgeInsets.symmetric(horizontal: 50,vertical: 10),
-              ),
-              onPressed: () {
-                formValidation();
-              },
-              child: const Text(
-                "Sign Up",
-                style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,),
-              ),
-            ),
-            const SizedBox(height: 30,),
-          ],
-        ),
+            ],
+          ),
+
+          const SizedBox(height: 5,),
+
+        ],
       ),
     );
   }

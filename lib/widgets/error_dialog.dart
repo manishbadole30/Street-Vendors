@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class ErrorDialog extends StatelessWidget
 {
   final String? message;
-  ErrorDialog({this.message});
+  ErrorDialog({super.key, this.message});
 
 
   @override

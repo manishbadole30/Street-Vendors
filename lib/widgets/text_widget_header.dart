@@ -32,7 +32,7 @@ class TextWidgetHeader extends SliverPersistentHeaderDelegate
             title!,
             maxLines: 2,
             textAlign: TextAlign.center,
-            style: TextStyle(
+            style: const TextStyle(
               fontFamily: "Signatra",
               fontSize: 30,
               letterSpacing: 2,

@@ -17,6 +17,7 @@ class _AuthScreenState extends State<AuthScreen> {
         length: 2,
         child: Scaffold(
           appBar: AppBar(
+            automaticallyImplyLeading: false,
             flexibleSpace: Container(
               decoration: const BoxDecoration(
                   gradient: LinearGradient(
