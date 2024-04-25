@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:street_vendors/global/global.dart';
 import 'package:street_vendors/Search/search_screen.dart';
 
+import '../aboutUs/about_us.dart';
 import '../authentication/auth_screen.dart';
 import '../mainScreens/home_screen.dart';
 
@@ -193,7 +194,7 @@ class MyDrawer extends StatelessWidget
                   ),
                   onTap: ()
                   {
-                      // Navigator.push(context, MaterialPageRoute(builder: (c)=> const AboutUs()));
+                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (c)=> AboutUsPage()));
                   },
                 ),
               ],

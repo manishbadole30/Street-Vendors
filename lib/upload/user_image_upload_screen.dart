@@ -141,7 +141,8 @@ class _UploadScreenState extends State<UploadScreen> {
          'downloads': 0,
          'createdAt': DateTime.now(),
        });
-       Navigator.canPop(context) ? Navigator.pop(context) : null;
+       Navigator.canPop(context) ? Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const UploadScreen())) : null;
+       // Navigator.pop(context)
        imageFile = null;
      }
     catch(error)

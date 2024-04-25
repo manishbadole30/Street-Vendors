@@ -79,42 +79,42 @@ class _ShopDetailsScreenState extends State<ShopDetailsScreen> {
 
             const SizedBox(height: 10),
 
-            Center(
-              child: InkWell(
-                onTap: ()
-                {
-                  //Comment Functionality to add
-                },
-                child: Container(
-                  decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(15)),
-                      gradient: LinearGradient(
-                        colors: [
-                          Colors.cyan,
-                          Colors.amber,
-                        ],
-                        begin:  FractionalOffset(0.0, 0.0),
-                        end:  FractionalOffset(1.0, 0.0),
-                        stops: [0.0, 1.0],
-                        tileMode: TileMode.clamp,
-                      )
-                  ),
-                  width: MediaQuery.of(context).size.width -13,
-                  height: 50,
-                  margin: const EdgeInsets.only(left: 30, top: 0.0, right: 30,bottom: 0),
-                  child: const Center(
-                    child: Text(
-                      "Add a Comment",
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 18,
-                          letterSpacing: 1.2,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
+            // Center(
+            //   child: InkWell(
+            //     onTap: ()
+            //     {
+            //       //Comment Functionality to add
+            //     },
+            //     child: Container(
+            //       decoration: const BoxDecoration(
+            //           borderRadius: BorderRadius.all(Radius.circular(15)),
+            //           gradient: LinearGradient(
+            //             colors: [
+            //               Colors.cyan,
+            //               Colors.amber,
+            //             ],
+            //             begin:  FractionalOffset(0.0, 0.0),
+            //             end:  FractionalOffset(1.0, 0.0),
+            //             stops: [0.0, 1.0],
+            //             tileMode: TileMode.clamp,
+            //           )
+            //       ),
+            //       width: MediaQuery.of(context).size.width -13,
+            //       height: 50,
+            //       margin: const EdgeInsets.only(left: 30, top: 0.0, right: 30,bottom: 0),
+            //       child: const Center(
+            //         child: Text(
+            //           "Add a Comment",
+            //           style: TextStyle(
+            //               color: Colors.white,
+            //               fontSize: 18,
+            //               letterSpacing: 1.2,
+            //           ),
+            //         ),
+            //       ),
+            //     ),
+            //   ),
+            // ),
 
             const SizedBox(height: 25,),
 

@@ -394,6 +394,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       :
                       Image.file
                         (imageXFile!).image,
+
+                  // NetworkImage(
+                  //     sharedPreferences!.getString("photoUrl")!
+                  // ),
+
+                   
                 ),
               ),
             ),

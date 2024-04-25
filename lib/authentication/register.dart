@@ -251,7 +251,8 @@ class _RegisterScreenState extends State<RegisterScreen>
       "userPassword":passwordcontroller.text.trim(),
       "userAvatarUrl":sellerImageUrl,
       "userphone":phonecontroller.text.trim(),
-      'createdAt': Timestamp.now(),
+      "status": "approved",
+      "createdAt": Timestamp.now(),
     });
 
     //save data locally

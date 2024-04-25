@@ -28,7 +28,8 @@ class _ShopsScreenState extends State<ShopsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: const MyDrawer(),
+      // drawer: const MyDrawer(),
+
       appBar: MyAppBar(),
       body: CustomScrollView(
         slivers: [
